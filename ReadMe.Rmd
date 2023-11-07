@@ -1,0 +1,4 @@
+# High School Pop Dynamics
+
+This repo tries to create material for teaching simple population dynamic concepts to high schools students. In Spanish.
+
