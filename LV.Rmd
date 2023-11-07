@@ -22,7 +22,7 @@ Esta es una guía para profesores. El objetivo es aprender matemáticas, program
 Yo empezaría por aprender algunos basicos para programar. 
 
 Aquí uso R y control de versiones. Se puede aprender los básicos de R (https://rforcats.net/) y contro de versiones (www.happygitwithr.com) facilmente, pero quizás es más sencillo usar Scratch (https://scratch.mit.edu/). 
-Scratch permite compartir proyectos que ejecutan código de programación en un lenguaje muy sencillo que se escribe a base de conectar piezas de puzle. Aqui puedes encontrar este proyecto en scratch: TBA
+Scratch permite compartir proyectos que ejecutan código de programación en un lenguaje muy sencillo que se escribe a base de conectar piezas de puzle. Aqui puedes encontrar este proyecto en scratch: https://scratch.mit.edu/projects/920589853/
 
 ### Nuestra pregunta: ¿Como podemos modelar los cambios naturales en el numero de individuos de una especie a lo largo del tiempo? 
 
