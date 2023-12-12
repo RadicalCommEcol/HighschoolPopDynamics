@@ -70,14 +70,16 @@ crecimiento <- function(N0 = 30, r = 1.5, tiempo = 50){
   N <- rep(NA,tiempo) #creamos un vector vacio (NA = Not available) para guardar el valor de N para cada tiempo. 
   N[1] <- N0 # asignamos N0 al primer valor (el uno que esta denro del corchete lo indica)
   for(i in 2:tiempo){ #para asignar el resto de valores, usaremos un bucle
-    N[i] <- r*N[i-1]  #resolvemos la equación para cada tiempo.
+    N[i] <- N[i-1] + r*N[i-1]  #resolvemos la equación para cada tiempo.
   }
   plot(N, t = "l", las = 1) #graficamos.
 }
 #nota: normalmente se resuelve la derivada de N sobre t (en continuo), pero es mucho más claro de forma discreta tal y como esta presentado aquí
 
 crecimiento() #a partir del año 40 tenemos 20000000000 (2 seguido de 9 ceros) individuos. Recuerda que hemos fijado r a 1.5, es decir cada individuo deja de media 1.5 descendientes por año.  
-crecimiento(N0 = 30, r = 1.5, tiempo = 10) #En 10 años pasamos de 30 a >1000 individuos.
+crecimiento(N0 = 30, r = 0, tiempo = 10) #En 10 años pasamos de 30 a >1000 individuos.
+crecimiento(N0 = 30, r = 0.1, tiempo = 10) #En 10 años pasamos de 30 a >1000 individuos.
+crecimiento(N0 = 30, r = -0.1, tiempo = 10) #En 10 años pasamos de 30 a >1000 individuos.
 ```
 
 ### Vamos a simular las dinamicas de una espcie aun más realisticamente
@@ -93,8 +95,9 @@ crecimiento <- function(N1 = 30, r = 1.5, k = 300, tiempo = 100){
   #añadimos el parametro k (individuos máximos)
   N <- rep(NA,tiempo) #creamos vector vacio
   N[1] <- N1 #le damos la población inicial
+  #k <- k/r
   for(i in 2:tiempo){ #bucle para calcular N en cada año i
-    N[i] <- r*N[i-1] * (1 - N[i-1]/k) #nuestra equación
+    N[i] <- N[i-1] + r*N[i-1] * (1 - N[i-1]/k) #nuestra equación
   }
   plot(N, t = "l", las = 1) #graficar
 }
@@ -103,6 +106,7 @@ crecimiento() #vemos que en
 crecimiento(N1 = 30, r = 3, k = 300, tiempo = 20)
 crecimiento(N1 = 30, r = 1.5, k = 300, tiempo = 20)
 crecimiento(N1 = 30, r = 1.1, k = 300, tiempo = 20)
+crecimiento(N1 = 30, r = 1, k = 300, tiempo = 20)
 ```
 
 ¿que hemos hecho con el segundo termino?
@@ -112,10 +116,10 @@ crecimiento(N1 = 30, r = 1.1, k = 300, tiempo = 20)
 N <- rep(NA,20) #creamos vector vacio para guardar Ns en 20 años
 N[1] <- 30 #N inicial
 r = 1.5
+k = 300 #capacidad de carga
 for(i in 2:20){ #bucle para calcular N en cada año i (de 2 a 20)
     N[i] <- r*N[i-1] * (1 - N[i-1]/k) #nuestra equación
   }
-k = 300 #capacidad de carga
 penalizacion <- rep(NA) #vector vacio para guardar las penalizaciones
 penalizacion[1] <- (1 - N[1]/k) #penalización para N1
 for(i in 2:20){ #bucle para N2 a 20
@@ -144,8 +148,8 @@ crecimiento <- function(N01 = 30, r1 = 1.5, a11 = -0.005, a12 = -0.0035,
   N2 <- rep(NA,tiempo)
   N2[1] <- N02
   for(i in 2:tiempo){
-    N1[i] <- N1[i-1] * (r1 + a11*N1[i-1] + a12*N2[i-1])  
-    N2[i] <- N2[i-1] * (r2 + a21*N2[i-1] + a22*N1[i-1])  
+    N1[i] <- N1[i-1] + N1[i-1] * (r1 + a11*N1[i-1] + a12*N2[i-1])  
+    N2[i] <- N2[i-1] + N2[i-1] * (r2 + a21*N2[i-1] + a22*N1[i-1])  
   }
   plot(N1, t = "l", col = "red", las = 1, ylim = c(0, max(c(max(N2), max(N1)))))
   points(N2, t = "l", col = "blue")
@@ -153,8 +157,8 @@ crecimiento <- function(N01 = 30, r1 = 1.5, a11 = -0.005, a12 = -0.0035,
 
 crecimiento()
 #gana azul
-crecimiento(N01 = 30, r1 = 1.5, a11 = -0.005, a12 = -0.0035,
-            N02 = 60, r2 = 1.5, a21 = -0.0027, a22 = -0.003, 
+crecimiento(N01 = 30, r1 = 0.5, a11 = -0.005, a12 = -0.0035,
+            N02 = 60, r2 = 0.5, a21 = -0.0035, a22 = -0.005, 
             tiempo = 20)
 #gana roja
 crecimiento(N01 = 30, r1 = 1.5, a11 = -0.003, a12 = -0.0035,
