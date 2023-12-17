@@ -1,5 +1,5 @@
 ---
-title: "¿Como se regulan las ponblaciones animales?"
+title: "¿Como se regulan las poblaciones animales?"
 author: "I. Bartomeus, V. Dominguez"
 date: '2023'
 output:
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## ¿Como funcionan las comunidades ecológicas?
 
-Esta es una guía para profesores. El objetivo es aprender matemáticas, programación y ecología. 
+Esta es una idea para ver que conceptos se podrían trabajar, no como se podrían trabajar. El como (e.g. como presentarlo, como programar, ... ) es otra guerra. El objetivo es aprender matemáticas, programación y ecología. 
 
 > De momento voy añadiendo ideas generales, sin documentar la guía a fondo. Trabajo de forma iterativa y esto puede ser considerada v0.1.
 
@@ -24,17 +24,17 @@ Esta es una guía para profesores. El objetivo es aprender matemáticas, program
 Yo empezaría por aprender algunos básicos para programar. 
 
 Aquí uso R y control de versiones. Se puede aprender los básicos de R (https://rforcats.net/) y control de versiones (www.happygitwithr.com) fácilmente, pero quizás es más sencillo usar Scratch (https://scratch.mit.edu/). 
-Scratch permite compartir proyectos que ejecutan código de programación en un lenguaje muy sencillo que se escribe a base de conectar piezas de puzle. Aquí puedes encontrar el código ejecutable de este proyecto en scratch: https://scratch.mit.edu/projects/920589853/
+Scratch permite compartir proyectos que ejecutan código de programación en un lenguaje muy sencillo que se escribe a base de conectar piezas de puzzle. Aquí puedes encontrar el código ejecutable de este proyecto en scratch: https://scratch.mit.edu/projects/920589853/ (en Scratch solo me he asegurado de que podía escribir las funciones, no de ponerlo bonito). Otra opción es directamente usar papel y boli para dibujar las gráficas resolviendolas para t, t+5, t+10, t+15 y t+20.
 
-### Nuestra pregunta: ¿Como podemos modelar los cambios naturales en el numero de individuos de una especie a lo largo del tiempo? 
+### Nuestra pregunta: ¿Como podemos modelar los cambios naturales en el número de individuos de una especie a lo largo del tiempo? 
 
-- "los cambios en el numero de individuos" = dinamica poblacional
+- "los cambios en el número de individuos" = dinámica poblacional
 - Para simplicar usaremos una espcie que vive un solo año, y se reproduce una sola vez al año.
 
 ### Vamos a empezar simulando las dinamicas de una espcie animal.
 
-**Conceptos ecológicos:** Los animales viven en poblaciones. Estas no son estaticas, sino que pueden crecer o disminuir con el tiempo. ¿Pueden crecer linearmenete?  
-**Conceptos matematicos:** Una linea es `y = a + bx` donde `b` es la pendiente de esta recta. `y` es el numero de animales que hay (el tamaño de la población) y `x` es el tiempo transcurrido. (`a` es el tamaño de la población inicial).  
+**Conceptos ecológicos:** Los animales viven en poblaciones. Estas no son estáticas, sino que pueden crecer o disminuir con el tiempo. ¿Pueden crecer linearmenete?  
+**Conceptos matematicos:** Una linea es `y = a + bx` donde `b` es la pendiente de esta recta. `y` es el número de animales que hay (el tamaño de la población) y `x` es el tiempo transcurrido. (`a` es el tamaño de la población inicial).  
 **Conceptos de programación:** Crear funciones y dibujarlas.  
 **Reflexión:** Tiene sentido que las poblaciones crezcan indefinidamente de forma lineal? (No)   
 
@@ -77,7 +77,7 @@ crecimiento <- function(N0 = 30, r = 0.1, tiempo = 50){
 }
 #nota: normalmente se resuelve la derivada de N sobre t (en continuo), pero es mucho más claro de forma discreta tal y como esta presentado aquí
 
-crecimiento() #a partir del año 40 tenemos >1000 individuos (2 seguido de 9 ceros) individuos. Recuerda que hemos fijado r a 0.1, es decir la población incrementa en un 1% cada año.  
+crecimiento() #a partir del año 40 tenemos >1000 individuos. Recuerda que hemos fijado r a 0.1, es decir la población incrementa en un 10% cada año.  
 crecimiento(N0 = 30, r = 0, tiempo = 10) #población estable
 crecimiento(N0 = 30, r = 0.1, tiempo = 100) #En 100 años pasamos de 30 a > 300000 individuos.
 crecimiento(N0 = 30, r = -0.1, tiempo = 10) #En 10 años pasamos de 30 a < 10 individuos.
@@ -85,10 +85,10 @@ crecimiento(N0 = 30, r = -0.1, tiempo = 10) #En 10 años pasamos de 30 a < 10 in
 
 ### Vamos a simular las dinamicas de una espcie aun más realisticamente
 
-**Conceptos ecológicos:** Algo ha de regular las poblaciones. Hay una capacidad de carga máxima (un numero de individuos máximo que puede albergar ese habitat), y esta refleja la competencia intraspecifica. Es decir, que cuando hay muchos individuos, compiten entre ellos, auto-limitandose.
-**Conceptos matemáticos:** Añadimos una penalización, lo que da curvas más complejas y realistas. Necesitamos penalizar el crecimiento exponencial cuando la población es muy alta. Para eso podemos multiplicar por numeros cercanos a 1 cuando la poblacion es baja (crecera exponencialmente) y por numeros cercanos a 0 cuando es muy alta (dejara de crecer). Eso lo conseguimos con el termino `(1 - N[i-1]/k)` Donde `k` es la capacidad de carga, o el numero máximo de individuos que pueden coexistir en esa habitat.
+**Conceptos ecológicos:** Algo ha de regular las poblaciones. Hay una capacidad de carga máxima (un número de individuos máximo que puede albergar ese habitat), y esta refleja la competencia intraspecifica. Es decir, que cuando hay muchos individuos, compiten entre ellos, auto-limitandose.
+**Conceptos matemáticos:** Añadimos una penalización, lo que da curvas más complejas y realistas. Necesitamos penalizar el crecimiento exponencial cuando la población es muy alta. Para eso podemos multiplicar por números cercanos a 1 cuando la poblacion es baja (crecera exponencialmente) y por numeros cercanos a 0 cuando es muy alta (dejara de crecer). Eso lo conseguimos con el termino `(1 - N[i-1]/k)` Donde `k` es la capacidad de carga, o el numero máximo de individuos que pueden coexistir en esa habitat.
 **Conceptos de programación:** Repasar funciones y bucles.
-**Reflexión:**¿las poblaciones crecen hasta alcanzar un numero máximo y despues de estabilizan? (A veces, pero es raro que una población sea estable, y no solemos ver equilibrios estaticos en ecología). 
+**Reflexión:**¿las poblaciones crecen hasta alcanzar un número máximo y después se estabilizan? (A veces, pero es raro que una población sea estable, y no solemos ver equilibrios estaticos en ecología). 
 
 Código:
 ```{r autoregulacion, message=FALSE, warning=FALSE}
@@ -112,7 +112,7 @@ crecimiento(N1 = 30, r = 0, k = 300, tiempo = 20) #Resultado esperado
 ¿que hemos hecho con el segundo termino?
 
 ```{r penalizacion, message=FALSE, warning=FALSE}
-#vamos a guardar algunos objetos de la función anterior para explorarlos despues
+#vamos a guardar algunos objetos de la función anterior para explorarlos después
 N <- rep(NA,100) #creamos vector vacio para guardar Ns en 20 años
 N[1] <- 30 #N inicial
 r = 0.1
@@ -126,12 +126,13 @@ for(i in 2:100){ #bucle para N2 a 20
   penalizacion[i] <- (1 - N[i-1]/k)  
 }
 plot(penalizacion ~ N, t = "l", las = 1) 
-#este termino es la competencia intraspecifica! Cuanto mayor es la población, menor es el valor hasta alcanzar 0 y decrece de forma casi lineal.
 ```
+
+Este termino es la competencia intraspecifica! Cuanto mayor es la población, menor es el valor hasta alcanzar 0 y decrece de forma casi lineal.
 
 ### Vamos a simular las dinamicas de dos espcies
 
-**Conceptos ecológicos:** Las especies no viven solas. También compiten con otras especies. La competencia tambien limita el crecimiento, regulando las poblaciones.
+**Conceptos ecológicos:** Las especies no viven solas. También compiten con otras especies. La competencia también limita el crecimiento, regulando las poblaciones.
 **Conceptos matematicos:** Podemos usar un sistema de equaciones que dependen una de otra. A los coeficientes de competencia les llamamos alpha (`a`) y pueden ser intraspecificos (`a11` y `a22`; que equivalen a la autolimitación que hemos visto antes) o intraspecificos (`a12` y `a21`; que equivalen a la competencia entre especies). Estos coeficientes van multiplicados por los tamaños poblacionales, por tanto, cuanto más grande la población, más fuerte la competencia. Aquí, los parametros iniciales son muy imprtantes para que las poblaciones sean viables.
 **Conceptos de programación:** Repasar funciones, bucles y graficarlas.
 **Reflexión:** A partir de aquí se puede seguir complicando los modelos, por ejemplo añadiendo más especies, diferentes tipos de interacciones (mutualistas, antagonistas), variables abioticas (e.g. lluvia) que afectan la r segun el año, estocasticidad, etc...
@@ -165,9 +166,9 @@ crecimiento(N01 = 30, r1 = 0.1, a11 = -0.0045, a12 = -0.0035,
             tiempo = 100) 
 ```
 
-Notad que para que no se extingan, la competencia dentro de especies (auto-limitación) ha de ser mayor que la competencia entre especies. 
+Notad que para que no se extingan, la competencia dentro de especies (auto-limitación) ha de ser mayor que la competencia entre especies. Esto es una regla general en Ecología.
 
-En la naturaleza hay muchos tipos de interaccione (competencia, depredación, mutualismos) y muchas espcies interaccionando al a vez. Estos modelos pueden llegar a tener mucha complejidad, y nos ayudan a saber las reglas que permiten a las espceis coexistir. Los ecolólogos usamos estas herramientas para entender como se regulan las poblaciones y comparamos modelos con observaciones reales.
+En la naturaleza hay muchos tipos de interacciones (competencia, depredación, mutualismos) y muchas espcies interaccionando a la vez. Estos modelos pueden llegar a tener mucha complejidad, y nos ayudan a saber las reglas que permiten a las especies coexistir. Los ecolólogos usamos estas herramientas para entender como se regulan las poblaciones y comparamos modelos con observaciones reales.
 
 Esta familia de modelos fueron propuestos por primera vez por Vito Voletrra y Alfred Lotka en los años 1920, y se han ido refinando a lo largo del tiempo, pero se siguen conociendo como equaciones Lotka-Volterra.  
 
