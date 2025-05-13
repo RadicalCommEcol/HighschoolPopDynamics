@@ -148,7 +148,7 @@ crecimiento <- function(N01 = 30, r1 = 0.1, a11 = -0.005, a12 = -0.0035,
   N2[1] <- N02
   for(i in 2:tiempo){
     N1[i] <- N1[i-1] + N1[i-1] * (r1 + a11*N1[i-1] + a12*N2[i-1])  
-    N2[i] <- N2[i-1] + N2[i-1] * (r2 + a21*N2[i-1] + a22*N1[i-1])  
+    N2[i] <- N2[i-1] + N2[i-1] * (r2 + a22*N2[i-1] + a21*N1[i-1])  
   }
   plot(N1, t = "l", col = "red", las = 1, ylim = c(0, max(c(max(N2), max(N1)))))
   points(N2, t = "l", col = "blue")
